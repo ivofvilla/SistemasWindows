@@ -4,42 +4,42 @@ using MediatR;
 
 public class CreateClienteHandler : IRequestHandler<CreateClienteCommand, Guid>
 {
-    private readonly DbContexto _context;
+    private readonly DbContexto _contexto;
 
-    public CreateClienteHandler(DbContexto context)
+    public CreateClienteHandler(DbContexto contexto)
     {
-        _context = context;
+        _contexto = contexto;
     }
 
-    public async Task<Guid> Handle(CreateClienteCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateClienteCommand requisicao, CancellationToken cancellationToken)
     {
         var cliente = new Cliente
         {
             Id = Guid.NewGuid(),
-            CPF = request.CPF,
-            Nome = request.Nome,
-            RG = request.RG,
-            DataExpedicao = request.DataExpedicao,
-            OrgaoExpedicao = request.OrgaoExpedicao,
-            UF = request.UF,
-            DataNascimento = request.DataNascimento,
-            Sexo = request.Sexo,
-            EstadoCivil = request.EstadoCivil,
+            CPF = requisicao.CPF,
+            Nome = requisicao.Nome,
+            RG = requisicao.RG,
+            DataExpedicao = requisicao.DataExpedicao,
+            OrgaoExpedicao = requisicao.OrgaoExpedicao,
+            UF = requisicao.UF,
+            DataNascimento = requisicao.DataNascimento,
+            Sexo = requisicao.Sexo,
+            EstadoCivil = requisicao.EstadoCivil,
             Endereco = new Endereco
             {
                 Id = Guid.NewGuid(),
-                CEP = request.CEP,
-                Logradouro = request.Logradouro,
-                Numero = request.Numero,
-                Complemento = request.Complemento,
-                Bairro = request.Bairro,
-                Cidade = request.Cidade,
-                UF = request.EnderecoUF
+                CEP = requisicao.CEP,
+                Logradouro = requisicao.Logradouro,
+                Numero = requisicao.Numero,
+                Complemento = requisicao.Complemento,
+                Bairro = requisicao.Bairro,
+                Cidade = requisicao.Cidade,
+                UF = requisicao.EnderecoUF
             }
         };
 
-        _context.Clientes.Add(cliente);
-        await _context.SaveChangesAsync(cancellationToken);
+        _contexto.Clientes.Add(cliente);
+        await _contexto.SaveChangesAsync(cancellationToken);
 
         return cliente.Id;
     }

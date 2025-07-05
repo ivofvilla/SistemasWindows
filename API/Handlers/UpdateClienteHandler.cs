@@ -10,9 +10,10 @@ public class UpdateClienteHandler : IRequestHandler<UpdateClienteCommand, Unit>
 
     public async Task<Unit> Handle(UpdateClienteCommand request, CancellationToken cancellationToken)
     {
-        var cliente = await _contexto.Clientes.Include(c => c.Endereco)
-            .FirstOrDefaultAsync(c => c.CPF == request.CPF, cancellationToken)
-            ?? throw new KeyNotFoundException("Cliente não encontrado");
+        var cliente = await _contexto.Clientes
+                                     .Include(c => c.Endereco)
+                                     .FirstOrDefaultAsync(c => c.CPF == request.CPF, cancellationToken)
+                                      ?? throw new KeyNotFoundException("Cliente não encontrado");
 
         cliente.CPF = request.CPF;
         cliente.Nome = request.Nome;
@@ -34,6 +35,7 @@ public class UpdateClienteHandler : IRequestHandler<UpdateClienteCommand, Unit>
         endereco.UF = request.EnderecoUF;
 
         await _contexto.SaveChangesAsync(cancellationToken);
+
         return Unit.Value;
     }
 }

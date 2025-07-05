@@ -1,0 +1,109 @@
+﻿@model MVC.Models.ClienteViewModel
+@{
+    ViewBag.Title = Model?.CPF != null ? "Atualizar Cliente" : "Novo Cliente";
+    var isEdit = Model?.CPF != null;
+}
+
+@using (Html.BeginForm("Save", "Cliente", FormMethod.Post))
+{
+    @Html.Hidden("IsEdit", Model != null && !string.IsNullOrEmpty(Model.CPF) ? "true" : "false")
+
+    <div class="container">
+        <h3>Cliente</h3>
+        <div class="row mb-2">
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.CPF)
+                @if (isEdit)
+                {
+                    @Html.TextBoxFor(m => m.CPF, new { @class = "form-control", @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(m => m.CPF, new { @class = "form-control" })
+                }
+            </div>
+            <div class="col-md-9">
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.RG)
+                @Html.TextBoxFor(m => m.RG, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.DataExpedicao)
+                @Html.TextBoxFor(m => m.DataExpedicao, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.OrgaoExpedicao)
+                @Html.TextBoxFor(m => m.OrgaoExpedicao, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("UF Expedição")
+                @Html.DropDownListFor(m => m.UF, new SelectList(ViewBag.UFs as List<string>, Model?.UF), "Selecione", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.DataNascimento)
+                @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Sexo)
+                @Html.DropDownListFor(m => m.Sexo, new SelectList(ViewBag.Sexos as List<string>, Model?.Sexo), "Selecione", new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.EstadoCivil)
+                @Html.DropDownListFor(m => m.EstadoCivil, new SelectList(ViewBag.EstadosCivis as List<string>, Model?.EstadoCivil), "Selecione", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <h3 class="mt-4">Endereço</h3>
+        <div class="row mb-2">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.CEP)
+                <div class="input-group">
+                    @Html.TextBoxFor(m => m.CEP, new { @class = "form-control" })
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">🔍</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                @Html.LabelFor(m => m.Logradouro, "Rua")
+                @Html.TextBoxFor(m => m.Logradouro, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.Numero)
+                @Html.TextBoxFor(m => m.Numero, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Complemento)
+                @Html.TextBoxFor(m => m.Complemento, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Bairro)
+                @Html.TextBoxFor(m => m.Bairro, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(m => m.Cidade)
+                @Html.TextBoxFor(m => m.Cidade, new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("UF")
+                @Html.DropDownListFor(m => m.EnderecoUF, new SelectList(ViewBag.UFs as List<string>, Model?.EnderecoUF), "UF", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg">@((isEdit ? "Atualizar" : "Salvar")) →</button>
+        </div>
+    </div>
+}

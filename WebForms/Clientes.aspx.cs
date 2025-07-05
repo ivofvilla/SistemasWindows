@@ -6,11 +6,13 @@ using WebForms;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http;
+using static System.Net.WebRequestMethods;
 
 namespace WebForms
 {
     public partial class Clientes : Page
     {
+        private const string URL = "https://localhost:5001/";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -23,7 +25,7 @@ namespace WebForms
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:5001/");
+                client.BaseAddress = new Uri(URL);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -62,7 +64,7 @@ namespace WebForms
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:5001/");
+                    client.BaseAddress = new Uri(URL);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
