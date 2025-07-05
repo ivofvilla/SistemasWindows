@@ -1,0 +1,90 @@
+﻿<Window x:Class="WCF.ClienteForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Cliente" Height="550" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" Grid.Row="0">
+                <TextBlock Text="Dados do Cliente" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <UniformGrid Columns="2" Margin="0,0,0,10">
+                    <TextBlock Text="CPF*"/>
+                    <xctk:MaskedTextBox Name="txtCPF"
+                                        Mask="000.000.000-00"
+                                        PromptChar="_"
+                                        Margin="5"
+                                        Width="200" />
+
+                    <TextBlock Text="Nome*"/>
+                    <TextBox x:Name="txtNome"/>
+
+                    <TextBlock Text="RG"/>
+                    <TextBox x:Name="txtRG"/>
+
+                    <TextBlock Text="Data Expedição"/>
+                    <xctk:MaskedTextBox Name="txtDataExpedicao"
+                                        Mask="00/00/0000"
+                                        PromptChar="_"
+                                        Margin="5"
+                                        Width="100" />
+
+                    <TextBlock Text="Órgão Expedição"/>
+                    <TextBox x:Name="txtOrgaoExpedicao"/>
+
+                    <TextBlock Text="UF Expedição"/>
+                    <ComboBox x:Name="cbUF"/>
+
+                    <TextBlock Text="Data Nascimento*"/>
+                    <xctk:MaskedTextBox Name="txtDataNascimento"
+                                        Mask="00/00/0000"
+                                        PromptChar="_"
+                                        Margin="5"
+                                        Width="100" />
+
+                    <TextBlock Text="Sexo*"/>
+                    <ComboBox x:Name="cbSexo"/>
+
+                    <TextBlock Text="Estado Civil*"/>
+                    <ComboBox x:Name="cbEstadoCivil"/>
+                </UniformGrid>
+
+                <TextBlock Text="Endereço" FontSize="16" FontWeight="Bold" Margin="0,10,0,10"/>
+
+                <UniformGrid Columns="2">
+                    <TextBlock Text="CEP*"/>
+                    <xctk:MaskedTextBox Name="txtCEP"
+                                        Mask="00000-000"
+                                        PromptChar="_"
+                                        Margin="5"
+                                        Width="100" />
+
+                    <TextBlock Text="Rua"/>
+                    <TextBox x:Name="txtLogradouro"/>
+
+                    <TextBlock Text="Número*"/>
+                    <TextBox x:Name="txtNumero"/>
+
+                    <TextBlock Text="Complemento"/>
+                    <TextBox x:Name="txtComplemento"/>
+
+                    <TextBlock Text="Bairro*"/>
+                    <TextBox x:Name="txtBairro"/>
+
+                    <TextBlock Text="Cidade*"/>
+                    <TextBox x:Name="txtCidade"/>
+
+                    <TextBlock Text="UF*"/>
+                    <ComboBox x:Name="cbEnderecoUF"/>
+                </UniformGrid>
+
+                <Button Content="Salvar" Width="100" Height="30" Margin="0,20,0,0" HorizontalAlignment="Center" Click="BtnSalvar_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>
