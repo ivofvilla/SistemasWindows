@@ -18,22 +18,24 @@ public class ClienteController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Novo([FromBody] CreateClienteCommand command)
     {
-        var id = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetPorId), new { id }, null);
+        await _mediator.Send(command);
+        return Created();
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Atualizar(Guid id, [FromBody] UpdateClienteCommand command)
+    [HttpPut("{cpf}")]
+    public async Task<IActionResult> Atualizar(string cpf, [FromBody] UpdateClienteCommand command)
     {
-        if (id != command.Id) return BadRequest("ID mismatch.");
+        if (!cpf.Equals(command.CPF)) 
+            return BadRequest("CPF inválido");
+
         await _mediator.Send(command);
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Apagar(Guid id)
+    [HttpDelete("{cpf}")]
+    public async Task<IActionResult> Apagar(string cpf)
     {
-        await _mediator.Send(new DeleteClienteCommand(id));
+        await _mediator.Send(new DeleteClienteCommand(cpf));
         return NoContent();
     }
 
@@ -48,6 +50,7 @@ public class ClienteController : ControllerBase
                 c.CPF,
                 c.Sexo,
                 c.EstadoCivil,
+                c.DataNascimento,
                 Endereco = new
                 {
                     c.Endereco.Logradouro,
@@ -59,11 +62,11 @@ public class ClienteController : ControllerBase
         return Ok(clientes);
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetPorId(Guid id)
+    [HttpGet("{cpf}")]
+    public IActionResult GetPorCPF(string cpf)
     {
         var cliente = _contexto.Clientes
-            .Where(c => c.Id == id)
+            .Where(c => c.CPF == cpf)
             .Select(c => new
             {
                 c.Id,
@@ -71,11 +74,20 @@ public class ClienteController : ControllerBase
                 c.CPF,
                 c.Sexo,
                 c.EstadoCivil,
+                c.RG,
+                c.DataNascimento,
+                c.DataExpedicao,
+                c.OrgaoExpedicao,
+                c.UF,
                 Endereco = new
                 {
                     c.Endereco.Logradouro,
                     c.Endereco.Cidade,
-                    c.Endereco.UF
+                    c.Endereco.UF,
+                    c.Endereco.CEP,
+                    c.Endereco.Bairro,
+                    c.Endereco.Numero,
+                    c.Endereco.Complemento
                 }
             })
             .FirstOrDefault();

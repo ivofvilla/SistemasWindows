@@ -11,7 +11,7 @@ public class DeleteClienteHandler : IRequestHandler<DeleteClienteCommand, Unit>
     public async Task<Unit> Handle(DeleteClienteCommand request, CancellationToken cancellationToken)
     {
         var cliente = await _contexto.Clientes.Include(c => c.Endereco)
-            .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken)
+            .FirstOrDefaultAsync(c => c.CPF == request.cpf, cancellationToken)
             ?? throw new KeyNotFoundException("Cliente não encontrado");
 
         _contexto.Clientes.Remove(cliente);
